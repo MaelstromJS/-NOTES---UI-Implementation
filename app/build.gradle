@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "23.0.0 rc2"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
-        applicationId "info.androidhive.listviewfeed"
-        minSdkVersion 11
-        targetSdkVersion 19
+        applicationId "com.maelstrom.notes"
+        minSdkVersion 19
+        targetSdkVersion 24
     }
 
     buildTypes {
@@ -19,6 +19,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.1.0'
-    compile files('libs/volley.jar')
+    compile 'com.android.support:support-v4:24.1.1'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
 }
