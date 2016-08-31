@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.android.volley.Cache;
 import com.android.volley.Cache.Entry;
@@ -30,9 +32,11 @@ import java.util.List;
 public class MainActivity extends Activity {
 	private static final String TAG = MainActivity.class.getSimpleName();
 	private ListView listView;
+	private SearchView sV;
 	private FeedListAdapter listAdapter;
 	private List<FeedItem> feedItems;
-	private String URL_FEED = "https://api.myjson.com/bins/59528";
+	private Trie hashtagTrie;
+	private String URL_FEED = "https://api.myjson.com/bins/4mi2c";
 
 	@SuppressLint("NewApi")
 	@Override
@@ -41,8 +45,10 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		listView = (ListView) findViewById(R.id.list);
+		sV = (SearchView) findViewById(R.id.searchView);
+		feedItems = new ArrayList<>();
 
-		feedItems = new ArrayList<FeedItem>();
+		hashtagTrie = new Trie ('\0', false);
 
 		listAdapter = new FeedListAdapter(this, feedItems);
 		listView.setAdapter(listAdapter);
@@ -94,6 +100,15 @@ public class MainActivity extends Activity {
 			AppController.getInstance().addToRequestQueue(jsonReq);
 		}
 
+		sV.setOnSearchClickListener (new View.OnClickListener () {
+			@Override
+			public void onClick (View view) {
+				String query = sV.getQuery ().toString ();
+				if (query.isEmpty()) return;
+
+
+			}
+		});
 	}
 
 	/**
@@ -111,9 +126,8 @@ public class MainActivity extends Activity {
 				item.setName(feedObj.getString("name"));
 
 				// Image might be null sometimes
-				String image = feedObj.isNull("image") ? null : feedObj
-						.getString("image");
-				item.setImge(image);
+				String image = feedObj.isNull("image") ? null : feedObj.getString("image");
+				item.setImage(image);
 				item.setStatus(feedObj.getString("status"));
 				item.setProfilePic(feedObj.getString("profilePic"));
 				item.setTimeStamp(feedObj.getString("timeStamp"));
@@ -121,6 +135,11 @@ public class MainActivity extends Activity {
 				// url might be null sometimes
 				String feedUrl = feedObj.isNull("url") ? null : feedObj
 						.getString("url");
+				String tag = feedObj.isNull("hashtag") ? "" : feedObj
+						.getString("hashtag");
+
+				item.setHashtag (tag);
+				hashtagTrie.insertWord (tag);
 				item.setUrl(feedUrl);
 
 				feedItems.add(item);

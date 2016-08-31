@@ -67,6 +67,8 @@ public class FeedListAdapter extends BaseAdapter {
 
 		TextView url = (TextView) convertView.findViewById(R.id.txtUrl);
 
+		TextView hashtag = (TextView) convertView.findViewById(R.id.txtHashtag);
+
 		NetworkImageView profilePic = (NetworkImageView) convertView.findViewById(R.id.profilePic);
 
 		FeedImageView feedImageView = (FeedImageView) convertView.findViewById(R.id.feedImage1);
@@ -103,12 +105,18 @@ public class FeedListAdapter extends BaseAdapter {
 			url.setVisibility(View.GONE);
 		}
 
+		if (item.getHashtag() != null) {
+			hashtag.setText(item.getHashtag());
+		} else {
+			hashtag.setText("");
+		}
+
 		// user profile pic
 		profilePic.setImageUrl(item.getProfilePic(), imageLoader);
 
 		// Feed image
-		if (item.getImge() != null) {
-			feedImageView.setImageUrl(item.getImge(), imageLoader);
+		if (item.getImage() != null) {
+			feedImageView.setImageUrl(item.getImage(), imageLoader);
 			feedImageView.setVisibility(View.VISIBLE);
 			feedImageView.setResponseObserver(new FeedImageView.ResponseObserver() {
 						@Override
@@ -122,6 +130,8 @@ public class FeedListAdapter extends BaseAdapter {
 		} else {
 			feedImageView.setVisibility(View.GONE);
 		}
+
+
 
 		return convertView;
 	}

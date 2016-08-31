@@ -2,12 +2,13 @@ package com.maelstrom.notes.data;
 
 public class FeedItem {
     private int id;
-    private String name, status, image, profilePic, timeStamp, url;
+    private String name, status, image, profilePic, timeStamp, url, hashtag;
 
     public FeedItem() {
     }
 
-    public FeedItem(int id, String name, String image, String status, String profilePic, String timeStamp, String url) {
+
+	public FeedItem(int id, String name, String image, String status, String profilePic, String timeStamp, String url, String hashtag) {
         super();
         this.id = id;
         this.name = name;
@@ -16,6 +17,7 @@ public class FeedItem {
         this.profilePic = profilePic;
         this.timeStamp = timeStamp;
         this.url = url;
+	    this.hashtag = hashtag;
     }
 
     public int getId() {
@@ -34,15 +36,23 @@ public class FeedItem {
         this.name = name;
     }
 
-    public String getImge() {
-        return image;
-    }
+	public String getImage () {
+		return image;
+	}
 
-    public void setImge(String image) {
-        this.image = image;
-    }
+	public void setImage (String image) {
+		this.image = image;
+	}
 
-    public String getStatus() {
+	public String getHashtag () {
+		return hashtag;
+	}
+
+	public void setHashtag (String hashtag) {
+		this.hashtag = hashtag;
+	}
+
+	public String getStatus() {
         return status;
     }
 
